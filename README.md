@@ -55,7 +55,16 @@ Either (a,b) (c,d)
 a -> b
 ```
 
-Chapter 2
-==========
+Chapter 2: Kinds
+====================
 * for regular programming, the building blocks are terms and types
 * for type level programming, the building blocks are types and kinds
+
+* concrete types are sometimes called *value types*
+* Type constraints also have kinds
+
+```haskell
+show :: Show a => a -> String
+```
+
+* `Show a` has kind `CONSTRAINT`
