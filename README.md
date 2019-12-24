@@ -68,3 +68,19 @@ show :: Show a => a -> String
 ```
 
 * `Show a` has kind `CONSTRAINT`
+
+### DataKinds
+* Lifts Data Constructor -> Type Constructors & Type -> Kind
+* This is called "promotion"
+
+```haskell
+{-# LANGUAGE DataKinds #-}
+
+data Bool = True | False
+-- kind Bool = 'True | 'False
+```
+
+* `Bool` is now a kind, and `'True/'False` are types of kind `Bool`
+  - `'True` and `'False` are called *promoted data constructors*
+  - the `'` *tick* is standard to signal that this thing is a promoted data
+    constructor
