@@ -84,3 +84,15 @@ data Bool = True | False
   - `'True` and `'False` are called *promoted data constructors*
   - the `'` *tick* is standard to signal that this thing is a promoted data
     constructor
+
+* You need `TypeLits` extension if you're going to promote stdlib types to kinds
+  (like `String, Num`, etc)
+
+#### Type Level Functions (*closed type families*)
+- these type families are functions at a type level
+- you cannot just promote term-level functions like you can with data
+  constructors
+
+Chapter 3: Variance
+--------------------
+* A type `T` can only be a functor if it is covariant
