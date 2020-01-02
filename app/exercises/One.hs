@@ -1,4 +1,4 @@
-module ChapterOne where
+module One where
 
 -- Determine the cardinality of Either Bool (Bool, Maybe Bool) -> Bool.
 -- This is both a sum and product type, so it's:

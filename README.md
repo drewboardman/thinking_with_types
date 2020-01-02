@@ -96,3 +96,14 @@ data Bool = True | False
 Chapter 3: Variance
 --------------------
 * A type `T` can only be a functor if it is covariant
+* The reason that invariant maps that you've seen before have both
+  transformation functions, is that invariant mapping requires `a` and `b` to be
+  isomorphisms.
+
+```haskell
+class Invariant f where
+  invmap :: (a -> b) -> (b -> a) -> f a -> f b
+```
+
+* *positive position*: this is based off of the canonical representation, and
+  there is a chart for this.
