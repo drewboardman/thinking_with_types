@@ -172,8 +172,27 @@ fmap @_ @Int @Bool :: Functor w => (Int -> Bool) -> w Int -> w Bool
 * They also allow you to write DSLs for your application
 
 ```haskell
+data Expr_ a
+= (a ∼ Int ) => LitInt_ Int
+| (a ∼ Bool ) => LitBool_ Bool
+| (a ∼ Int ) => Add_ ( Expr_ Int ) ( Expr_ Int )
+| If_ ( Expr_ Bool ) ( Expr_ a) ( Expr_ a)
+
+-- this is equivalent to 
+
+{-# LANGUAGE GADTs #-}
+
 data Expr a where
   LitInt :: Int -> Expr Int
   LitBool :: Bool -> Expr Bool
   Add :: Expr Int -> Expr Int -> Expr Int
 ```
+
+> `(:#) :: t -> HList ts -> HList (t ': ts)` if you have a t thing, and an HList
+> that contains ts things, you can make an HList that contains (t : ts) things
+> if it were just -> HList ts at the end, then it wouldn't change the type first
+> of all you could prepend arbitrarily many elements of any type to any HList
+> without changing the type, if that were the case in the same way consing a
+> regular list doesn't change the type second you'd never be able to make a
+> (t:ts) thing (barring undefined), since HList ts -> HList ts would only
+> preserve what you've already got, and the only other thing is []
