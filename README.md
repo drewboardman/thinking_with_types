@@ -189,10 +189,10 @@ data Expr a where
 ```
 
 > `(:#) :: t -> HList ts -> HList (t ': ts)` if you have a t thing, and an HList
-> that contains ts things, you can make an HList that contains (t : ts) things
-> if it were just -> HList ts at the end, then it wouldn't change the type first
-> of all you could prepend arbitrarily many elements of any type to any HList
-> without changing the type, if that were the case in the same way consing a
-> regular list doesn't change the type second you'd never be able to make a
-> (t:ts) thing (barring undefined), since HList ts -> HList ts would only
-> preserve what you've already got, and the only other thing is []
+ that contains ts things, you can make an HList that contains (t : ts) things if
+ it were just -> HList ts at the end, then it wouldn't change the type first of
+ all you could prepend arbitrarily many elements of any type to any HList
+ without changing the type, if that were the case in the same way consing a
+ regular list doesn't change the type second you'd never be able to make a
+ (t:ts) thing (barring undefined), since HList ts -> HList ts would only
+ preserve what you've already got, and the only other thing is []
