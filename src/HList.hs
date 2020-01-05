@@ -35,11 +35,16 @@ instance Eq ( HList '[] ) where
 instance ( Eq t, Eq ( HList ts)) => Eq ( HList (t ': ts)) where
   (a :# as) == (b :# bs) = a == b && as == bs
 
+-- instead of writing two Eq instances, you can use a closed type family.
+-- This performs type-level pattern matching on a list of types
+type family AllEq (ts :: [Type]) :: Constraint where
+  AllEq '[] = ()
+  AllEq (t ': ts) = (Eq t, AllEq ts)
+
 instance Ord (HList '[] ) where
   HNil <= HNil = True
 
 instance (Ord t, Ord (HList ts)) => Ord (HList (t ': ts)) where
-  (t :# ts) <= (u :# us)
-    | t <= u = True
-    | t > u = False
-    | otherwise = ts <= us
+  (t :# ts) <= (u :# us) | t <= u    = True
+                         | t > u     = False
+                         | otherwise = ts <= us
