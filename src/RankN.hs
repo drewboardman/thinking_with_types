@@ -1,4 +1,6 @@
+{-# LANGUAGE RankNTypes #-}
+
 module RankN where
 
-applyToFive :: (a -> a) -> Int
+applyToFive :: (forall a . a -> a) -> Int
 applyToFive f = f 5

@@ -4,7 +4,7 @@ Chapter 1
 * An isomorphism between types s and t is defined as a pair of functions `to` and `from`:
 
 ```haskell
-to ::s->t 
+to ::s->t
 from::t->s
 ```
 
@@ -151,7 +151,7 @@ working f a = apply where
     a type-level function
 
 ```haskell
-*Main Lib One Two> :set -XTypeApplications 
+*Main Lib One Two> :set -XTypeApplications
 *Main Lib One Two> :t fmap
 fmap :: Functor f => (a -> b) -> f a -> f b
 *Main Lib One Two> :t fmap @Maybe
@@ -178,7 +178,7 @@ data Expr_ a
 | (a ∼ Int ) => Add_ ( Expr_ Int ) ( Expr_ Int )
 | If_ ( Expr_ Bool ) ( Expr_ a) ( Expr_ a)
 
--- this is equivalent to 
+-- this is equivalent to
 
 {-# LANGUAGE GADTs #-}
 
@@ -189,10 +189,32 @@ data Expr a where
 ```
 
 > `(:#) :: t -> HList ts -> HList (t ': ts)` if you have a t thing, and an HList
- that contains ts things, you can make an HList that contains (t : ts) things if
- it were just -> HList ts at the end, then it wouldn't change the type first of
- all you could prepend arbitrarily many elements of any type to any HList
- without changing the type, if that were the case in the same way consing a
- regular list doesn't change the type second you'd never be able to make a
- (t:ts) thing (barring undefined), since HList ts -> HList ts would only
- preserve what you've already got, and the only other thing is []
+> that contains ts things, you can make an HList that contains (t : ts) things
+> if it were just -> HList ts at the end, then it wouldn't change the type first
+> of all you could prepend arbitrarily many elements of any type to any HList
+> without changing the type, if that were the case in the same way consing a
+> regular list doesn't change the type second you'd never be able to make a
+> (t:ts) thing (barring undefined), since HList ts -> HList ts would only
+> preserve what you've already got, and the only other thing is []
+
+ RankN
+ ------
+ * Remember that `a -> a` gets quantified to `forall a. a -> a`
+
+ > The intuition behind higher-rank types is that they are functions which take
+ > callbacks . The rank of a function is how often control gets “handed off”. A
+ > rank-2 function will call a polymorphic function for you, while a rank-3
+ > function will run a callback which itself runs a callback.
+
+> More precisely, a function gains higher rank every time a forall quantifier
+> exists on the left-side of a function arrow.
+
+Continuation Monad
+------------------
+> The type `forall r. (a -> r) -> r` is known as being in continuation-passing
+> style or more tersely as CPS .
+
+> Since we know that `Identity a ~= a` and that `a ∼= forall r. (a -> r) -> r` ,
+> we should expect the transitive isomorphism between `Identity a` and CPS.
+> Since we know that `Identity a` is a Monad and that isomorphisms preserve
+> typeclasses, we should expect that CPS also forms a Monad .
