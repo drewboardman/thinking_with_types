@@ -8,8 +8,11 @@ instance Functor Cont where
   fmap aTb (Cont aTr) = Cont (\bTr -> aTr $ bTr . aTb)
 
 instance Applicative Cont where
-  pure aTb = Cont aTb
-  (Cont aTb) <*> x = fmap aTb x
+  pure a = Cont $ \k -> k a
+  (Cont caTb) <*> (Cont ca) = Cont $ \k ->
+    caTb $ \aTb ->
+      ca $ \a ->
+        k (aTb a)
 
 -- remember that :i (.)
 -- (b -> r) -> (a -> b) -> a -> r
