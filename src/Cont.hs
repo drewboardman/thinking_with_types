@@ -14,6 +14,11 @@ instance Applicative Cont where
       ca $ \a ->
         k (aTb a)
 
+instance Monad Cont where
+  (Cont ca) >>= f = Cont $ \k ->
+    ca $ \a ->
+      unCont (f a) k
+
 -- remember that :i (.)
 -- (b -> r) -> (a -> b) -> a -> r
 -- and
